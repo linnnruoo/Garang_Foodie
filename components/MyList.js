@@ -3,6 +3,9 @@ import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon, Container, Header, Button, Right, Content, Text } from 'native-base'
 import EntryTile from './EntryTile'
 import { AppLoading } from 'expo'
+import CVTest from './CVTest';
+
+import { createStackNavigator, createAppContainer } from 'react-navigation'
 
 export default class MyList extends React.Component {
   constructor() {
@@ -11,7 +14,7 @@ export default class MyList extends React.Component {
       loading: true 
     }
   }
-
+  
   static navigationOptions = {
     tabBarIcon: ({ tintColor }) => (
       <Icon type="FontAwesome" name="spoon" style={{ color: tintColor }} />
@@ -33,20 +36,22 @@ export default class MyList extends React.Component {
       return <AppLoading />
     } else {
       return (
-      <Container>
-        <Content>
-          <EntryTile />
-          <EntryTile />
-          <EntryTile />
-        </Content>
-        <TouchableOpacity onPress={() => navigation.navigate('CVTest') } style={styles.addButton}>
-          <Icon name="add" style={styles.icon} />
-        </TouchableOpacity>
-      </Container>
-    );
+        <Container>
+          <Content>
+            <EntryTile />
+            <EntryTile />
+            <EntryTile />
+          </Content>
+          <TouchableOpacity onPress={() => navigation.navigate('CVTest') } style={styles.addButton}>
+            <Icon name="add" style={styles.icon} />
+          </TouchableOpacity>
+        </Container>
+      );
+    }
   }
 }
-}
+
+
 
 const styles = StyleSheet.create({
   addButton: {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { Platform } from 'react-native'
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation'
-import MyList from './MyList';
-import Marketplace from './Marketplace'
+import MyListContainer from './MyListContainer';
+import MarketplaceContainer from './MarketplaceContainer'
 import {Icon, Button} from 'native-base'
 
 export default class Main extends React.Component {
@@ -30,10 +30,10 @@ export default class Main extends React.Component {
 
 const AppTabNavigator = createBottomTabNavigator({
   "My Food": {
-    screen: MyList
+    screen: MyListContainer
   }, 
   Marketplace: {
-    screen: Marketplace
+    screen: MarketplaceContainer
   }
 }, {
   swipeEnabled: true,

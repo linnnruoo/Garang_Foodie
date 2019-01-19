@@ -1,6 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import {Icon, Container, Content} from 'native-base'
+import { StyleSheet, View } from 'react-native';
+import {Icon, Container, Content, Button, Text} from 'native-base'
 import fire from '../services/FireService';
 import { AppLoading } from 'expo'
 import EntryTile from './EntryTile';
@@ -45,9 +45,14 @@ export default class Marketplace extends React.Component {
     )
 
     return (
-      <View>
-        <Text>If its not authenticated, Sign up / Login</Text>
-      </View>
+      <Container>
+        <Button onPress={() => this.navigation.navigate('Signup')}>
+          <Text>Sign Up</Text>
+        </Button>
+        <Button onPress={() => this.navigation.navigate('Login')}>
+          <Text>Login</Text>
+        </Button>
+      </Container>
     );
   }
 }
