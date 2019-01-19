@@ -6,6 +6,7 @@
 import React from 'react';
 import { View, Text, Button, StyleSheet } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
+import Main from './components/Main';
 import SignupScreen from './components/signup/Signup';
 import LoginScreen from './components/login/Login';
 import ProfileScreen from './components/profile/Profile';
@@ -36,9 +37,10 @@ const styles = StyleSheet.create({
 const AppNavigator = createStackNavigator(
   {
     Home: { screen: HomeScreen },
+    Main: { screen: Main },
     Signup: { screen: SignupScreen },
     Login: { screen: LoginScreen },
-    Profile: { screen: ProfileScreen }
+    Profile: { screen: ProfileScreen },
   },
   {
     initialRouteName: "Home"
