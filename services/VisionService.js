@@ -11,6 +11,7 @@ var headers = {
 }
 
 const retrieveTags = async(filePath) => {
+    console.log("retrieveTags");
     let query= 'visualFeatures=Tags&language=en'
     let endPoint = `analyze?${query}`;
     const apiUrl = `${baseURI}${endPoint}`;
@@ -34,4 +35,4 @@ const retrieveTags = async(filePath) => {
     }
 };
 
-export default { retrieveTags };
+export { retrieveTags };

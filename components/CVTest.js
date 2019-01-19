@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import { StyleSheet, Text, View, Button, Image } from 'react-native';
+import { StyleSheet, Image } from 'react-native';
+import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body } from 'native-base'
+import { AppLoading } from 'expo'
 import { ImagePicker, Permissions } from 'expo';
 import { retrieveTags } from './../services/VisionService';
 import * as _ from 'lodash';
@@ -8,37 +10,63 @@ class CVTest extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      loading: true,
       image: null,
       uploading: false,
       tags: []
     };
   }
+
+  async componentWillMount() {
+    await Expo.Font.loadAsync({
+      Roboto: require("native-base/Fonts/Roboto.ttf"),
+      Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
+    })
+    this.setState({ loading: false })
+  }
+
   render() {
     let { image, tags } = this.state;
 
-    const formatTags = ()=> {
-       return(<>{
-       _.map(tags, (tag) => {
-        //console.log(tag.name, tag.confidence);
-        return(<Text key={tag.name}>{tag.name} : {tag.confidence}</Text>);  
-      })
-    }</>)
+    const formatTags = () => {
+      return (<CardItem style={{ flex: 1, flexDirection: 'column'}}>{
+        _.map(tags, (tag) => {
+          console.log(tag.name, tag.confidence);
+          return (<Text key={tag.name}>{tag.name} : {tag.confidence}</Text>);
+        })
+      }</CardItem>)
     };
-    
-    return (
-      <>
-        <Text>Select an image</Text>
-        <Button
-          title="Pick an image"
-          onPress={this._takePhoto}
-        />
-        {image &&
-          <Image source={{ uri: image }} style={{ paddingTop: 20, width: 300, height: 200 }} />}
-        {image &&
-                  <Button title="Get tags" onPress={this._processPhoto} />}
-        { tags ? tags.length > 0 ? formatTags(): (<></>) : (<></>)}
-      </>
-    );
+    if (this.state.loading) {
+      return <AppLoading />
+    } else {
+      return (
+        <>
+          <Card>
+            <CardItem>
+              <Left style={{ display: 'flex', flex: 1 }}>
+                <Icon type="FontAwesome" name="image" style={{ fontSize: 24, color: "gray" }} />
+                <Text style={{ fontWeight: 'bold' }}>Take a picture</Text>
+              </Left>
+              <Right>
+                <Button
+                  onPress={this._takePhoto} >
+                  <Text>Pick an image</Text>
+                </Button>
+              </Right>
+            </CardItem>
+            <CardItem cardBody>
+            {image &&
+            <Image source={{ uri: image }}  style={{height: 200, width: null, flex: 1}}/>}
+            </CardItem>
+            {tags ? tags.length > 0 ? formatTags() : (<></>) : (<></>)}
+            {image &&
+            <CardItem footer button onPress={this._processPhoto}>
+              <Text>Get Tags</Text>
+            </CardItem>}
+          </Card>
+        </>
+      );
+    }
   }
 
   _takePhoto = async () => {
@@ -60,7 +88,7 @@ class CVTest extends Component {
 
       if (!pickerResult.cancelled) {
         this.setState(
-          { 
+          {
             image: pickerResult.uri,
             imageBase64String: pickerResult.base64
           });
@@ -87,14 +115,17 @@ class CVTest extends Component {
   _processPhoto = async () => {
     //const string = await this.state.imageBase64String;
     //console.log(this.state.imageBase64String.length);
+    console.log("trying");
     try {
+      console.log("calling");
       const result = await retrieveTags(this.state.image);
       this.setState({
         tags: result
       });
+      console.log("done");
     }
     catch {
-      
+
     }
   };
 }
