@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import { ImagePicker, Permissions } from 'expo';
-import { retrieveTags } from './../service/VisionService';
+import { retrieveTags } from './../services/VisionService';
 import * as _ from 'lodash';
 
 class CVTest extends Component {
