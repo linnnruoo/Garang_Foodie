@@ -27,12 +27,11 @@ class Signup extends Component {
         this.state.password
       )
       .then((res) => {
-        console.log("res!", res);
-        this.refs.toast.show('Registered Successfully!');
+        this.refs.toast.show('Registered Successfully!', DURATION.LENGTH_SHORT);
         this.props.navigation.navigate('Profile');
       })
       .catch((err) => {
-        this.refs.toast.show(err.message);
+        this.refs.toast.show(err.message, DURATION.LENGTH_LONG);
       })
   }
 

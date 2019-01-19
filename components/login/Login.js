@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import fire from '../fire';
+import Toast, { DURATION } from 'react-native-easy-toast'
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 
 class Login extends Component {
@@ -25,13 +26,11 @@ class Login extends Component {
         this.state.password
       )
       .then((res) => {
-        console.log(res);
-        Alert.alert("Logined!")
+        this.refs.toast.show("Welcome back!", DURATION.LENGTH_SHORT);
+        // TODO: main page
       })
       .catch((err) => {
-      // Handle Errors here.
-      var errorCode = err.code;
-      var errorMessage = err.message;
+      this.refs.toast.show(err.message, DURATION.LENGTH_LONG);
     })
   }
 
@@ -51,6 +50,7 @@ class Login extends Component {
           placeholder="Password"
         />
         <Button title="Login" onPress={this._loginUser} />
+        <Toast ref="toast" />
       </View>
     )
   }
