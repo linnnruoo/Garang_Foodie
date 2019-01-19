@@ -4,7 +4,7 @@ import CVTest from './CVTest'
 import { createStackNavigator, createAppContainer } from 'react-navigation'
 import fire from '../services/FireService';
 import {Icon, Button, Spinner} from 'native-base'
-import NoAuth from './NoAuth';
+import NoAuth from './Auth';
 
 export default class MyListContainer extends React.Component {
   constructor() {

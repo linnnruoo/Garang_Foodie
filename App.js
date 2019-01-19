@@ -4,6 +4,7 @@ import Main from './components/Main'
 import Login from './components/Login'
 import Signup from './components/Signup'
 import CVTest from './components/CVTest'
+import Auth from './components/Auth'
 
 export default class App extends React.Component {
   
@@ -26,6 +27,9 @@ const AppNavigator = createStackNavigator({
   },
   CVTest: {
     screen: CVTest
+  },
+  Auth: {
+    screen: Auth
   }
 })
 

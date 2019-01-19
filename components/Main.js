@@ -12,7 +12,7 @@ export default class Main extends React.Component {
       <Icon
         name="ios-person"
         onPress={() => {
-          navigation.navigate('Login');
+          navigation.navigate('Auth');
         }}
         style={{color: 'black', marginRight: 20}}
       />
