@@ -34,4 +34,4 @@ const retrieveTags = async(filePath) => {
     }
 };
 
-export { retrieveTags };
+export default { retrieveTags };
