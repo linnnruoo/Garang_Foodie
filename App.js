@@ -13,39 +13,24 @@ import ProfileScreen from './components/profile/Profile';
 
 class HomeScreen extends React.Component {
   render() {
-    const { navigation } = this.props;
-
     return (
-      <View style={styles.container}>
-        <Text>Home</Text>
-        <Button title="Sign Up" onPress={() => navigation.navigate('Signup')} />
-        <Button title="Login" onPress={() => navigation.navigate('Login')} />
-        <Button title="Main" onPress={() => navigation.navigate('Main')} />
-      </View>
+      <AppContainer/>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
 const AppNavigator = createStackNavigator(
   {
-    Home: { screen: HomeScreen },
     Main: { screen: Main },
     Signup: { screen: SignupScreen },
     Login: { screen: LoginScreen },
     Profile: { screen: ProfileScreen },
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Main"
   }
 );
 
-export default createAppContainer(AppNavigator);
+const AppContainer = createAppContainer(AppNavigator)
+
+export default HomeScreen;

@@ -3,10 +3,12 @@ import { Platform } from 'react-native'
 import { createBottomTabNavigator, createAppContainer } from 'react-navigation'
 import MyList from './MyList';
 import Marketplace from './Marketplace'
+import {Icon} from 'native-base'
 
 export default class Main extends React.Component {
   static navigationOptions = {
-    title: "GarangFoodies"
+    title: "GarangFoodies",
+    headerRight: <Icon name="ios-person" style={{paddingRight: 8,}}/>
   }
 
   render() {

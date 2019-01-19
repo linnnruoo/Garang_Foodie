@@ -6,8 +6,9 @@ import { AppLoading } from 'expo'
 export default class EntryTile extends React.Component {
   constructor() {
     super()
-    this.state = { 
-      loading: true 
+    this.state = {
+      loading: true,
+      currTime: new Date().toLocaleTimeString()
     }
   }
 
@@ -19,9 +20,14 @@ export default class EntryTile extends React.Component {
     this.setState({ loading: false })
   }
 
- 
+  componentDidMount() {
+    setInterval(() => {
+      this.setState({currTime: new Date().toLocaleTimeString()})
+    })
+  }
 
   render() {
+
     if (this.state.loading) {
       return <AppLoading />
     } else {
@@ -36,9 +42,17 @@ export default class EntryTile extends React.Component {
               <Text note><Icon type="FontAwesome" name="map-marker" style={{ fontSize: 16, color: "gray" }} /> Tampines</Text>
             </Right>
           </CardItem>
+
           <CardItem cardBody>
             <Image source={{ uri: 'https://media.karousell.com/media/photos/products/2015/03/18/limited_edition_white_fudge_covered_oreo_1426653062_a61da08a.jpg' }} style={{ height: 200, width: null, flex: 1 }} />
           </CardItem>
+
+          <CardItem>
+            <Body>
+              <Text style={{ fontWeight: 'bold', fontSize: 18}}>White Fudge Oreos</Text>
+            </Body>
+          </CardItem>
+
           <CardItem>
             <Left>
               <Button transparent>
@@ -50,10 +64,10 @@ export default class EntryTile extends React.Component {
                 <Text>4</Text>
               </Button>
             </Left>
-
-            {/* <Right>
-            <Text note>Offer ends in 12 hours</Text>
-            </Right> */}
+            <Right>
+              <Text note>Offer ends in:</Text>
+              <Text>{this.state.currTime}</Text>
+            </Right>
           </CardItem>
         </Card>
       );
