@@ -34,15 +34,36 @@ class CVTest extends Component {
     });
   }
 
-  _onSubmit = () => {
-    fire.database().ref('posts/').push({
-      image: uuid.v1(),
-      tags: this.state.tags,
-      expiry_date: new Date()
-    })
-    .then(() => console.log("success"))
-    .catch((err) => console.log(err));
+  _urlToBlob = (url) => { 
+    return new Promise((resolve, reject) => { 
+      var xhr = new XMLHttpRequest(); 
+      xhr.onerror = reject; 
+      xhr.onreadystatechange = () => { 
+        if (xhr.readyState === 4) {
+          resolve(xhr.response);
+        } 
+      }; 
+      xhr.open('GET', url); 
+      xhr.responseType = 'blob'; 
+      xhr.send();
+    }) 
+  }
 
+  _onSubmit = async () => {
+    
+    const blob = await this._urlToBlob(this.state.image);
+    const uuidStr = uuid.v1();
+    fire.storage().ref().child('images/' + uuidStr).put(blob, {}).then((snapshot) =>{
+      console.log('File uploaded');
+      fire.database().ref('posts/').push({
+        image: uuidStr,
+        tags: this.state.tags,
+        expiry_date: new Date()
+      })
+      .then(() => console.log("success"))
+      .catch((err) => console.log(err));  
+    })
+    .catch((err) => console.log(err));
   }
 
   render() {
