@@ -32,9 +32,11 @@ class CVTest extends Component {
       return (<>{
         _.map(tags, (tag) => {
           console.log(tag.name, tag.confidence);
+          if (Float(tag.confidence) > 0.5) {
           return (<Badge key={tag.name} primary style={{ margin: 3}}>
             <Text key={tag.name}>{tag.name}</Text>
             </Badge>);
+          }
         })
       }</>)
     };
