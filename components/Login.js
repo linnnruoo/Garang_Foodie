@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import fire from './fire';
+import fire from '../services/FireService';
 import Toast, { DURATION } from 'react-native-easy-toast'
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 
