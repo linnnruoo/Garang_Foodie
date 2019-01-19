@@ -1,21 +1,51 @@
-import React from 'react';
-import { createStackNavigator, createAppContainer } from 'react-navigation'
-import Main from './components/Main'
 
-export default class App extends React.Component {
-  
+/**
+ * @source: https://reactnavigation.org/docs/en/hello-react-navigation.html
+ */
+
+import React from 'react';
+import { View, Text, Button, StyleSheet } from "react-native";
+import { createStackNavigator, createAppContainer } from "react-navigation";
+import Main from './components/Main';
+import SignupScreen from './components/signup/Signup';
+import LoginScreen from './components/login/Login';
+import ProfileScreen from './components/profile/Profile';
+
+class HomeScreen extends React.Component {
   render() {
+    const { navigation } = this.props;
+
     return (
-      <AppContainer/>
+      <View style={styles.container}>
+        <Text>Home</Text>
+        <Button title="Sign Up" onPress={() => navigation.navigate('Signup')} />
+        <Button title="Login" onPress={() => navigation.navigate('Login')} />
+        <Button title="Main" onPress={() => navigation.navigate('Main')} />
+      </View>
     );
   }
 }
 
-const AppNavigator = createStackNavigator({
-  Main: {
-    screen: Main
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+const AppNavigator = createStackNavigator(
+  {
+    Home: { screen: HomeScreen },
+    Main: { screen: Main },
+    Signup: { screen: SignupScreen },
+    Login: { screen: LoginScreen },
+    Profile: { screen: ProfileScreen },
+  },
+  {
+    initialRouteName: "Home"
   }
-})
+);
 
-const AppContainer = createAppContainer(AppNavigator)
-
+export default createAppContainer(AppNavigator);
