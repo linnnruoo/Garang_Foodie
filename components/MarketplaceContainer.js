@@ -9,7 +9,8 @@ export default class Marketplace extends React.Component {
   constructor() {
     super();
     this.state = {
-      loading: true
+      loading: true,
+      posts: []
     }
   }
 
@@ -20,12 +21,18 @@ export default class Marketplace extends React.Component {
   }
 
   componentDidMount= () => {
-    this.authSubscription = fire.auth().onAuthStateChanged((user) => {
+    let temp = [];
+
+    const dbRef = fire.database().ref('/posts');
+    dbRef.once('value').then((snapshot) => {
+      snapshot.forEach((child) => {
+        temp.push(child.val());
+      })
+
       this.setState({
-        loading: false,
-        user,
-      });
-    });
+        posts: temp
+      })
+    })
   }
 
   componentWillUnmount() {
@@ -33,13 +40,15 @@ export default class Marketplace extends React.Component {
   }
 
   render() {
-    if(this.state.loading) return <Spinner />
-
     return (
       <Container>
         <Content>
           <EntryTile />
-          <EntryTile />
+          {
+            (this.state.posts).map((post, index) => {
+              return (<EntryTile />)
+            })
+          }
         </Content>
       </Container>
     )

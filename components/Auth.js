@@ -8,6 +8,7 @@ export default class Auth extends React.Component {
     this.state = { 
       loading: true 
     }
+    this._onLogout = this._onLogout.bind(this);
   }
 
   componentDidMount= () => {

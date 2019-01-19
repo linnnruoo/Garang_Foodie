@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { StyleSheet, Image, Alert } from 'react-native';
 import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body, Spinner, Container, Content, Badge } from 'native-base'
 import { AppLoading } from 'expo'
 import { ImagePicker, Permissions } from 'expo';
 import { retrieveTags } from './../services/VisionService';
 import * as _ from 'lodash';
+import uuid from 'react-native-uuid';
+import fire from '../services/FireService'
 
 class CVTest extends Component {
   constructor(props) {
@@ -13,8 +15,10 @@ class CVTest extends Component {
       loading: true,
       image: null,
       uploading: false,
-      tags: []
+      tags: [],
+      filtered_tags: []
     };
+    this._onSubmit = this._onSubmit.bind(this);
   }
 
   async componentWillMount() {
@@ -22,24 +26,70 @@ class CVTest extends Component {
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     })
-    this.setState({ loading: false })
+    this.authSubscription = fire.auth().onAuthStateChanged((user) => {
+      this.setState({
+        loading: false,
+        user,
+      });
+    });
+  }
+
+  _onSubmit = () => {
+    fire.database().ref('posts/').push({
+      image: uuid.v1(),
+      tags: this.state.tags,
+      expiry_date: new Date()
+    })
+    .then(() => console.log("success"))
+    .catch((err) => console.log(err));
+
   }
 
   render() {
     let { image, tags } = this.state;
-
+    console.log("USER", this.state.user)
     const formatTags = () => {
       return (<>{
         _.map(tags, (tag) => {
-          console.log(tag.name, tag.confidence);
-          //if (Float(tag.confidence) > 0.5) {
-          return (<Badge key={tag.name} primary style={{ margin: 3}}>
-            <Text key={tag.name}>{tag.name}</Text>
-            </Badge>);
-          //}
+          if (parseFloat(tag.confidence) > 0.5) {
+            return (
+              <Badge key={tag.name} primary style={{ margin: 3}}>
+                <Text key={tag.name}>{tag.name}</Text>
+              </Badge>
+            );
+          }
         })
       }</>)
     };
+
+    const displayCard = (
+      <>
+        <CardItem cardBody>
+        {
+          image &&
+          <Image source={{ uri: image }}  style={{height: 200, width: null, flex: 1}}/>
+        }
+        </CardItem>
+        
+        {
+          image &&
+          <CardItem cardBody>
+            <Body style={{ display: 'flex',flex: 1, flexDirection: 'row', width: '100%', flexWrap: 'wrap'}}>
+            {tags ? tags.length > 0 ? formatTags() : (<Spinner color='blue'/>) : (<></>)}
+            </Body>
+          </CardItem>
+        }
+        {
+          image &&
+          <CardItem footer>
+            <Button onPress={this._onSubmit}>
+              <Text>Submit</Text>
+            </Button>
+          </CardItem>
+        }
+      </>
+    )
+
     if (this.state.loading) {
       return <AppLoading />
     } else {
@@ -59,16 +109,7 @@ class CVTest extends Component {
                 </Button>
               </Right>
             </CardItem>
-            <CardItem cardBody>
-            {image &&
-            <Image source={{ uri: image }}  style={{height: 200, width: null, flex: 1}}/>}
-            </CardItem>
-            {image &&
-            <CardItem footer>
-              <Body style={{ display: 'flex',flex: 1, flexDirection: 'row', width: '100%', flexWrap: 'wrap'}}>
-              {tags ? tags.length > 0 ? formatTags() : (<Spinner color='blue'/>) : (<></>)}
-              </Body>
-            </CardItem>}
+            {displayCard}
           </Card>
         </Content>
         </Container>
@@ -95,7 +136,7 @@ class CVTest extends Component {
       if (!pickerResult.cancelled) {
         this.setState(
           {
-            image: pickerResult.uri,
+            image: pickerResult.uri
           }, () => {
             this._processPhoto();
           });

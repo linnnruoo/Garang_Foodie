@@ -27,7 +27,11 @@ class Login extends Component {
       )
       .then((res) => {
         this.refs.toast.show("Welcome back!", DURATION.LENGTH_SHORT);
-        // TODO: main page
+        fire.auth().onAuthStateChanged((user) => {
+          if (user) {
+            this.props.navigation.navigate('Main')
+          }
+        })
       })
       .catch((err) => {
       this.refs.toast.show(err.message, DURATION.LENGTH_LONG);
