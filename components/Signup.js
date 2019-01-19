@@ -28,7 +28,11 @@ class Signup extends Component {
       )
       .then((res) => {
         this.refs.toast.show('Registered Successfully!', DURATION.LENGTH_SHORT);
-        this.props.navigation.navigate('Profile');
+        fire.auth().onAuthStateChanged((user) => {
+          if (user) {
+            this.props.navigation.navigate('Profile')
+          }
+        })
       })
       .catch((err) => {
         this.refs.toast.show(err.message, DURATION.LENGTH_LONG);

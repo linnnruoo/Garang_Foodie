@@ -17,16 +17,7 @@ class Profile extends Component {
   }
 
   _updateProfile = () => {
-    // const id = uuid.v1();
-    // fire.database().ref('users/').push({
-    //   id: id,
-    //   email: this.state.email,
-    //   password: this.state.password,
-    //   name: this.state.name
-    // }, () => {
-    //   Alert.alert('Registered!');
-    //   console.log("test")
-    // })
+    
   }
 
   render() {

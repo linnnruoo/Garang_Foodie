@@ -7,7 +7,6 @@ import { retrieveTags } from './../services/VisionService';
 import * as _ from 'lodash';
 import uuid from 'react-native-uuid';
 import fire from '../services/FireService'
-import { ReactNativeFile, extractFiles } from 'extract-files'
 
 class CVTest extends Component {
   constructor(props) {
@@ -27,34 +26,28 @@ class CVTest extends Component {
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     })
-    this.setState({ loading: false })
+    this.authSubscription = fire.auth().onAuthStateChanged((user) => {
+      this.setState({
+        loading: false,
+        user,
+      });
+    });
   }
 
   _onSubmit = () => {
-    // const str = uuid.v1();
-
-    // console.log("test")
-    // const uri = this.state.image;
-    // const file = new File(uri);
-    // console.log(file)
-
-    // fire.storage().ref().child('images/' + str).put(file).then((snapshot) => {
-    //   fire.database().ref('posts/').push({
-    //     date: new Date(),
-    //     image: str,
-    //     tags: this.state.tags
-    //   });
-    // })
-    // .then(() => {
-    //   Alert.alert("Submitted!");
-    //   this.props.navigation.navigate('Main')
-    // })
+    fire.database().ref('posts/').push({
+      image: uuid.v1(),
+      tags: this.state.tags,
+      expiry_date: new Date()
+    })
+    .then(() => console.log("success"))
+    .catch((err) => console.log(err));
 
   }
 
   render() {
     let { image, tags } = this.state;
-
+    console.log("USER", this.state.user)
     const formatTags = () => {
       return (<>{
         _.map(tags, (tag) => {
