@@ -9,7 +9,13 @@ export default class Main extends React.Component {
   static navigationOptions = ({ navigation, screenProps }) => ({
     title: "GarangFoodies",
     headerRight: (
-      <Icon name="ios-person" onPress={() => navigation.navigate('Login')} style={{color: 'black', marginRight: 20}} />
+      <Icon
+        name="ios-person"
+        onPress={() => {
+          navigation.navigate('Login');
+        }}
+        style={{color: 'black', marginRight: 20}}
+      />
     ),
   });
 
