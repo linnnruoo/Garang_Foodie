@@ -3,6 +3,9 @@ import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon, Container, Header, Button, Right, Content, Text } from 'native-base'
 import EntryTile from './EntryTile'
 import { AppLoading } from 'expo'
+import CVTest from './CVTest';
+
+import { createStackNavigator, createAppContainer } from 'react-navigation'
 
 export default class MyList extends React.Component {
   constructor() {
@@ -47,6 +50,18 @@ export default class MyList extends React.Component {
   }
 }
 }
+
+const ChildNavigator = createStackNavigator({
+  MyList: {
+    screen: MyList
+  },
+  CVTest: {
+    screen: CVTest
+  }
+})
+
+const ChildNavigator = createAppContainer(ChildNavigator)
+
 
 const styles = StyleSheet.create({
   addButton: {
