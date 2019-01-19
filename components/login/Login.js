@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import fire from '../fire';
-import uuid from 'react-native-uuid'
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 
 class Login extends Component {
@@ -19,14 +18,20 @@ class Login extends Component {
   }
 
   _loginUser = () => {
-    fire.database().ref('users/').push({
-      id: id,
-      email: this.state.email,
-      password: this.state.password,
-      name: this.state.name
-    }, () => {
-      Alert.alert('Registered!');
-      console.log("test")
+    fire
+      .auth()
+      .signInWithEmailAndPassword(
+        this.state.email,
+        this.state.password
+      )
+      .then((res) => {
+        console.log(res);
+        Alert.alert("Logined!")
+      })
+      .catch((err) => {
+      // Handle Errors here.
+      var errorCode = err.code;
+      var errorMessage = err.message;
     })
   }
 

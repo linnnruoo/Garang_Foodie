@@ -5223,7 +5223,7 @@ randomatic@^3.0.0:
     kind-of "^6.0.0"
     math-random "^1.0.1"
 
-randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.3, randombytes@^2.0.5:
+randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5:
   version "2.0.6"
   resolved "https://registry.yarnpkg.com/randombytes/-/randombytes-2.0.6.tgz#d302c522948588848a8d300c932b44c24231da80"
   integrity sha512-CIQ5OFxf4Jou6uOKe9t1AOgqpeU5fd70A8NPdHSGeYXqXsPe6peOwI0cUl88RWZ6sP1vPMV3avd/R6cZ5/sP1A==
@@ -5286,6 +5286,13 @@ react-native-branch@2.2.5:
   resolved "https://registry.yarnpkg.com/react-native-branch/-/react-native-branch-2.2.5.tgz#4074dd63b4973e6397d9ce50e97b57c77a518e9d"
   integrity sha1-QHTdY7SXPmOX2c5Q6XtXx3pRjp0=
 
+react-native-easy-toast@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/react-native-easy-toast/-/react-native-easy-toast-1.1.0.tgz#7d3a34ed298d32c4827b8d43ddfab6a71b98a2e3"
+  integrity sha512-cW7MdNk4JIqB6an4ACn9K7KXMDng7D1LsMW0bjVml5xliTNvXkbo7cnF1+rTzaf29Phr2uX2Vhf3ipsqi6znmg==
+  dependencies:
+    prop-types "^15.5.10"
+
 react-native-gesture-handler@1.0.12, react-native-gesture-handler@^1.0.0:
   version "1.0.12"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.0.12.tgz#99a22f90212df299245357dbd3a9a01c788f310b"
@@ -5338,13 +5345,6 @@ react-native-tab-view@^1.0.0, react-native-tab-view@^1.2.0:
   integrity sha512-QNt6VkEW8SP1UJ7yjD5P4bOTWwHQfoIMD5CqnA06pcubdNwHR1NmjiNZsVnIvp5wAEVbW6yTHjLXOh1fzab4xg==
   dependencies:
     prop-types "^15.6.1"
-
-react-native-uuid@^1.4.9:
-  version "1.4.9"
-  resolved "https://registry.yarnpkg.com/react-native-uuid/-/react-native-uuid-1.4.9.tgz#a526742f8fddfe6414500655212ca8d109c40229"
-  integrity sha1-pSZ0L4/d/mQUUAZVISyo0QnEAik=
-  dependencies:
-    randombytes "^2.0.3"
 
 react-native-vector-icons@6.0.0:
   version "6.0.0"

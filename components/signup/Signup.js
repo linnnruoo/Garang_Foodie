@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import fire from '../fire';
-import uuid from 'react-native-uuid'
+import Toast, { DURATION } from 'react-native-easy-toast'
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
 
 class Signup extends Component {
@@ -20,16 +20,6 @@ class Signup extends Component {
   }
 
   _signupUser = () => {
-    // const id = uuid.v1();
-    // fire.database().ref('users/').push({
-    //   id: id,
-    //   email: this.state.email,
-    //   password: this.state.password,
-    //   name: this.state.name
-    // }, () => {
-    //   Alert.alert('Registered!');
-    //   console.log("test")
-    // })
     fire
       .auth()
       .createUserWithEmailAndPassword(
@@ -38,10 +28,11 @@ class Signup extends Component {
       )
       .then((res) => {
         console.log("res!", res);
-        Alert.alert("Registered successfully!");
+        this.refs.toast.show('Registered Successfully!');
+        this.props.navigation.navigate('Profile');
       })
       .catch((err) => {
-        console.log("error!", err);
+        this.refs.toast.show(err.message);
       })
   }
 
@@ -60,12 +51,8 @@ class Signup extends Component {
           onChangeText={this._onChangeText('password')}
           placeholder="Enter your password here"
         />
-        <TextInput
-          value={this.state.name}
-          onChangeText={this._onChangeText('name')}
-          placeholder="Enter your full name here"
-        />
         <Button title="Sign Up" onPress={this._signupUser} />
+        <Toast ref="toast" />
       </View>
     )
   }

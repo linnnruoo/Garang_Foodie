@@ -8,6 +8,7 @@ import { View, Text, Button, StyleSheet } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import SignupScreen from './components/signup/Signup';
 import LoginScreen from './components/login/Login';
+import ProfileScreen from './components/profile/Profile';
 
 class HomeScreen extends React.Component {
   render() {
@@ -36,7 +37,8 @@ const AppNavigator = createStackNavigator(
   {
     Home: { screen: HomeScreen },
     Signup: { screen: SignupScreen },
-    Login: { screen: LoginScreen }
+    Login: { screen: LoginScreen },
+    Profile: { screen: ProfileScreen }
   },
   {
     initialRouteName: "Home"
