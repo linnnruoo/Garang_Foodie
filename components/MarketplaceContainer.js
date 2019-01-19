@@ -40,13 +40,13 @@ export default class Marketplace extends React.Component {
   }
 
   render() {
+    console.log(this.posts)
     return (
       <Container>
         <Content>
-          <EntryTile />
           {
             (this.state.posts).map((post, index) => {
-              return (<EntryTile />)
+              return (<EntryTile key={index} post={post} />)
             })
           }
         </Content>

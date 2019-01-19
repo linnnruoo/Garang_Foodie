@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image } from 'react-native'
-import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body } from 'native-base'
+import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body, Badge } from 'native-base'
 import { AppLoading } from 'expo'
 
 export default class EntryTile extends React.Component {
@@ -22,9 +22,29 @@ export default class EntryTile extends React.Component {
  
 
   render() {
+    console.log("post", this.props.post)
+    const { post } = this.props;
+
     if (this.state.loading) {
       return <AppLoading />
     } else {
+
+      const formatTags = (
+        <>
+        {
+          post.tags.map((tag, index) => {
+            if (parseFloat(tag.confidence) > 0.5) {
+              return (
+                <Badge key={tag.name} primary style={{ margin: 3}}>
+                  <Text key={tag.name}>{tag.name}</Text>
+                </Badge>
+              );
+            }
+          })
+        }
+        </>
+      )
+
       return (
         <Card>
           <CardItem>
@@ -40,6 +60,11 @@ export default class EntryTile extends React.Component {
             <Image source={{ uri: 'https://media.karousell.com/media/photos/products/2015/03/18/limited_edition_white_fudge_covered_oreo_1426653062_a61da08a.jpg' }} style={{ height: 200, width: null, flex: 1 }} />
           </CardItem>
           <CardItem>
+          {
+            (post) ? formatTags : null
+          }
+          </CardItem>
+          {/* <CardItem>
             <Left>
               <Button transparent>
                 <Icon active name="thumbs-up" />
@@ -51,10 +76,10 @@ export default class EntryTile extends React.Component {
               </Button>
             </Left>
 
-            {/* <Right>
+            <Right>
             <Text note>Offer ends in 12 hours</Text>
-            </Right> */}
-          </CardItem>
+            </Right>
+          </CardItem> */}
         </Card>
       );
     }

@@ -26,19 +26,17 @@ class CVTest extends Component {
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     })
-    this.authSubscription = fire.auth().onAuthStateChanged((user) => {
-      this.setState({
-        loading: false,
-        user,
-      });
-    });
   }
 
   _onSubmit = () => {
+    const user = fire.auth().currentUser;
+
     fire.database().ref('posts/').push({
       image: uuid.v1(),
       tags: this.state.tags,
-      expiry_date: new Date()
+      expiry_date: "2 days",
+      owner: user.displayName,
+      photoURL: user.photoURL
     })
     .then(() => console.log("success"))
     .catch((err) => console.log(err));
@@ -47,7 +45,7 @@ class CVTest extends Component {
 
   render() {
     let { image, tags } = this.state;
-    console.log("USER", this.state.user)
+
     const formatTags = () => {
       return (<>{
         _.map(tags, (tag) => {
