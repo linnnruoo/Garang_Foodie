@@ -29,12 +29,12 @@ export default class Main extends React.Component {
 }
 
 const AppTabNavigator = createBottomTabNavigator({
+  Marketplace: {
+    screen: MarketplaceContainer
+  },
   "My Food": {
     screen: MyListContainer
   }, 
-  Marketplace: {
-    screen: MarketplaceContainer
-  }
 }, {
   swipeEnabled: true,
   tabBarOptions: {
