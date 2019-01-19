@@ -37,11 +37,6 @@ export default class MyList extends React.Component {
     } else {
       return (
         <Container>
-          <Content>
-            <EntryTile />
-            <EntryTile />
-            <EntryTile />
-          </Content>
           <TouchableOpacity onPress={() => navigation.navigate('CVTest') } style={styles.addButton}>
             <Icon name="add" style={styles.icon} />
           </TouchableOpacity>
