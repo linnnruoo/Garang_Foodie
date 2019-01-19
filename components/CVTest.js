@@ -50,7 +50,7 @@ class CVTest extends Component {
   }
 
   _onSubmit = async () => {
-    
+    const user = fire.auth().currentUser;
     const blob = await this._urlToBlob(this.state.image);
     const uuidStr = uuid.v1();
     fire.storage().ref().child('images/' + uuidStr).put(blob, {}).then((snapshot) =>{
@@ -58,7 +58,10 @@ class CVTest extends Component {
       fire.database().ref('posts/').push({
         image: uuidStr,
         tags: this.state.tags,
-        expiry_date: new Date()
+        expiry_date: "2 days",
+        owner: user.displayName,
+        photoURL: user.photoURL
+        
       })
       .then(() => console.log("success"))
       .catch((err) => console.log(err));  
