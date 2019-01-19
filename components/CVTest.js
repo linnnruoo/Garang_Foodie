@@ -32,9 +32,11 @@ class CVTest extends Component {
       return (<>{
         _.map(tags, (tag) => {
           console.log(tag.name, tag.confidence);
-          return (<Badge key={tag.name} primary style={{ marginTop: 2}}>
+          //if (Float(tag.confidence) > 0.5) {
+          return (<Badge key={tag.name} primary style={{ margin: 3}}>
             <Text key={tag.name}>{tag.name}</Text>
             </Badge>);
+          //}
         })
       }</>)
     };
@@ -63,8 +65,7 @@ class CVTest extends Component {
             </CardItem>
             {image &&
             <CardItem footer>
-              <Body style={{ flex: 1, flexDirection: 'column'}}>
-              <Text>Tags</Text>
+              <Body style={{ display: 'flex',flex: 1, flexDirection: 'row', width: '100%', flexWrap: 'wrap'}}>
               {tags ? tags.length > 0 ? formatTags() : (<Spinner color='blue'/>) : (<></>)}
               </Body>
             </CardItem>}
