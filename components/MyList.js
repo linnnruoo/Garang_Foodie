@@ -27,6 +27,8 @@ export default class MyList extends React.Component {
   }
 
   render() {
+    const { navigation } = this.props;
+
     if (this.state.loading) {
       return <AppLoading />
     } else {
@@ -37,7 +39,7 @@ export default class MyList extends React.Component {
           <EntryTile />
           <EntryTile />
         </Content>
-        <TouchableOpacity onPress={() => {}} style={styles.addButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('CVTest') } style={styles.addButton}>
           <Icon name="add" style={styles.icon} />
         </TouchableOpacity>
       </Container>
