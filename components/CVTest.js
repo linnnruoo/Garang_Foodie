@@ -4,7 +4,7 @@ import { ImagePicker, Permissions } from 'expo';
 import { retrieveTags } from './../../service/VisionService';
 import * as _ from 'lodash';
 
-class ImageSelectContainer extends Component {
+class CVTest extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -104,4 +104,4 @@ class ImageSelectContainer extends Component {
 const styles = StyleSheet.create({
 });
 
-export default ImageSelectContainer;
+export default CVTest;
