@@ -17,9 +17,10 @@ class HomeScreen extends React.Component {
 
     return (
       <View style={styles.container}>
-        <Text>Home Screen</Text>
+        <Text>Home</Text>
         <Button title="Sign Up" onPress={() => navigation.navigate('Signup')} />
         <Button title="Login" onPress={() => navigation.navigate('Login')} />
+        <Button title="Main" onPress={() => navigation.navigate('Main')} />
       </View>
     );
   }
