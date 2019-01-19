@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image } from 'react-native';
-import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body } from 'native-base'
+import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body, Spinner, Container, Content, Badge } from 'native-base'
 import { AppLoading } from 'expo'
 import { ImagePicker, Permissions } from 'expo';
 import { retrieveTags } from './../services/VisionService';
@@ -29,18 +29,21 @@ class CVTest extends Component {
     let { image, tags } = this.state;
 
     const formatTags = () => {
-      return (<CardItem style={{ flex: 1, flexDirection: 'column'}}>{
+      return (<>{
         _.map(tags, (tag) => {
           console.log(tag.name, tag.confidence);
-          return (<Text key={tag.name}>{tag.name} : {tag.confidence}</Text>);
+          return (<Badge key={tag.name} primary style={{ marginTop: 2}}>
+            <Text key={tag.name}>{tag.name}</Text>
+            </Badge>);
         })
-      }</CardItem>)
+      }</>)
     };
     if (this.state.loading) {
       return <AppLoading />
     } else {
       return (
-        <>
+        <Container>
+          <Content>
           <Card>
             <CardItem>
               <Left style={{ display: 'flex', flex: 1 }}>
@@ -58,13 +61,16 @@ class CVTest extends Component {
             {image &&
             <Image source={{ uri: image }}  style={{height: 200, width: null, flex: 1}}/>}
             </CardItem>
-            {tags ? tags.length > 0 ? formatTags() : (<></>) : (<></>)}
             {image &&
-            <CardItem footer button onPress={this._processPhoto}>
-              <Text>Get Tags</Text>
+            <CardItem footer>
+              <Body style={{ flex: 1, flexDirection: 'column'}}>
+              <Text>Tags</Text>
+              {tags ? tags.length > 0 ? formatTags() : (<Spinner color='blue'/>) : (<></>)}
+              </Body>
             </CardItem>}
           </Card>
-        </>
+        </Content>
+        </Container>
       );
     }
   }
@@ -82,15 +88,15 @@ class CVTest extends Component {
     if (cameraPerm === 'granted' && cameraRollPerm === 'granted') {
       let pickerResult = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
-        aspect: [4, 3],
-        base64: true
+        aspect: [4, 3]
       });
 
       if (!pickerResult.cancelled) {
         this.setState(
           {
             image: pickerResult.uri,
-            imageBase64String: pickerResult.base64
+          }, () => {
+            this._processPhoto();
           });
       }
     }
