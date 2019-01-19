@@ -13,7 +13,7 @@ export default class Marketplace extends React.Component {
   render() {
     return (
       <View>
-        <Text>Marketplace</Text>
+        <Text>If its not authenticated, Sign up / Login</Text>
       </View>
     );
   }
