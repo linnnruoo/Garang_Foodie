@@ -54,6 +54,7 @@ class CVTest extends Component {
         image: uuidStr,
         tags: this.state.tags,
         expiry_date: "2 days",
+        user_id: user.uid,
         owner: user.displayName,
         photoURL: user.photoURL
         
