@@ -29,8 +29,11 @@ export default class Marketplace extends React.Component {
 
     dbRef.once('value').then((snapshot) => {
       snapshot.forEach((child) => {
-        childPromises.push(storeRef.child(child.val().image).getDownloadURL());
-        temp.push(child.val());
+        //if (child.isListed) {
+        if (child.val().isListed) {
+          childPromises.push(storeRef.child(child.val().image).getDownloadURL());
+          temp.push(child.val());
+        }
       });
 
       Promise.all(childPromises).then((response) => {

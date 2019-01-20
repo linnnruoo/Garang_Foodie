@@ -34,7 +34,7 @@ export default class Auth extends React.Component {
     if(this.state.loading) return <Spinner />
 
     const authenticated = (
-      <Button onPress={this._onLogout}>
+      <Button onPress={this._onLogout} style={{color: '#FFB238'}}>
         <Text>Log Out</Text>
       </Button>
     )

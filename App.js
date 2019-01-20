@@ -7,11 +7,20 @@ import Auth from './components/Auth'
 import Profile from './components/Profile'
 
 export default class App extends React.Component {
-  
+  constructor() {
+    super();
+    this._refresh = this._refresh.bind(this);
+  }
+  _refresh = () => {
+    new Promise((resolve) => {
+      setTimeout(()=>{resolve()}, 2000)
+    });
+  }
+
   render() {
     console.disableYellowBox = true;
     return (
-      <AppContainer/>
+        <AppContainer/>
     );
   }
 }

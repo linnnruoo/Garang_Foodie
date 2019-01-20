@@ -51,7 +51,10 @@ export default class EntryTile extends React.Component {
               <Text style={{ fontWeight: 'bold' }}>{post.owner}</Text>
             </Left>
             <Right>
-              <Text note><Icon type="FontAwesome" name="map-marker" style={{ fontSize: 16, color: "gray" }} /> Tampines</Text>
+              <Text note>
+                <Icon type="Feather" name="clock" style={{ fontSize: 16, color: "gray" }} />{' '}
+                {post.expiry_date}
+              </Text>
             </Right>
           </CardItem>
           <CardItem cardBody>

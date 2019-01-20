@@ -52,13 +52,15 @@ class CVTest extends Component {
     fire.storage().ref().child('images/' + uuidStr).put(blob, {}).then((snapshot) => {
       console.log('File uploaded');
       fire.database().ref('posts/').push({
+        post_id: uuid.v1(),
         image: uuidStr,
         tags: this.state.tags,
         expiry_date: this.state.selected,
         user_id: user.uid,
         owner: user.displayName,
         photoURL: user.photoURL,
-        selected : null
+        selected : null,
+        isListed: false
       })
         .then(() => {
           console.log("success");
@@ -99,6 +101,7 @@ class CVTest extends Component {
         <>
         <CardItem style={{paddingBottom: 0, paddingBottom: 0}}>
           <Icon type="Feather" name="clock" style={{ fontSize: 24, color: "gray" }} />
+          <Text>Select the expiry date: </Text>
           <Picker
               note
               mode="dropdown"
@@ -111,7 +114,7 @@ class CVTest extends Component {
               <Picker.Item label="3 Days" value="3 Days" />
               <Picker.Item label="5 Days" value="5 Days" />
               <Picker.Item label="A week" value="A week" />
-            </Picker>
+          </Picker>
         </CardItem>
         <CardItem footer>
           <Button onPress={this._onSubmit}>
