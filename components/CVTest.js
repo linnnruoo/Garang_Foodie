@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image } from 'react-native';
-import { Card, CardItem, Text, Button, Icon, Left, Right, Body, Spinner, Container, Content, Badge } from 'native-base'
+import { Card, CardItem, Text, Button, Icon, Left, Right, Body, Spinner, Container, Content, Badge, Picker } from 'native-base'
 import { AppLoading } from 'expo'
 import { ImagePicker, Permissions } from 'expo';
 import { retrieveTags } from './../services/VisionService';
@@ -22,50 +22,55 @@ class CVTest extends Component {
   }
 
   async componentWillMount() {
-    await Expo.Font.loadAsync({
+    Expo.Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
-    })
-    this.setState({loading: false})
+    }).then(() => {   this.setState({ loading: false })})
   }
 
-  _urlToBlob = (url) => { 
-    return new Promise((resolve, reject) => { 
-      var xhr = new XMLHttpRequest(); 
-      xhr.onerror = reject; 
-      xhr.onreadystatechange = () => { 
+  _urlToBlob = (url) => {
+    return new Promise((resolve, reject) => {
+      var xhr = new XMLHttpRequest();
+      xhr.onerror = reject;
+      xhr.onreadystatechange = () => {
         if (xhr.readyState === 4) {
           resolve(xhr.response);
-        } 
-      }; 
-      xhr.open('GET', url); 
-      xhr.responseType = 'blob'; 
+        }
+      };
+      xhr.open('GET', url);
+      xhr.responseType = 'blob';
       xhr.send();
-    }) 
+    })
   }
 
   _onSubmit = async () => {
     const user = fire.auth().currentUser;
     const blob = await this._urlToBlob(this.state.image);
     const uuidStr = uuid.v1();
-    fire.storage().ref().child('images/' + uuidStr).put(blob, {}).then((snapshot) =>{
+    fire.storage().ref().child('images/' + uuidStr).put(blob, {}).then((snapshot) => {
       console.log('File uploaded');
       fire.database().ref('posts/').push({
         image: uuidStr,
         tags: this.state.tags,
-        expiry_date: "2 days",
+        expiry_date: this.state.selected,
         user_id: user.uid,
         owner: user.displayName,
-        photoURL: user.photoURL
-        
+        photoURL: user.photoURL,
+        selected : null
       })
-      .then(() => {
-        console.log("success");
-        this.props.navigation.navigate('Main');
-      })
-      .catch((err) => console.log(err));  
+        .then(() => {
+          console.log("success");
+          this.props.navigation.navigate('Main');
+        })
+        .catch((err) => console.log(err));
     })
-    .catch((err) => console.log(err));
+      .catch((err) => console.log(err));
+  }
+
+  _onPickerChange = (value) => {
+    this.setState({
+      selected: value
+    });
   }
 
   render() {
@@ -76,7 +81,7 @@ class CVTest extends Component {
         _.map(tags, (tag) => {
           if (parseFloat(tag.confidence) > 0.5) {
             return (
-              <Badge key={tag.name} primary style={{ margin: 3}}>
+              <Badge key={tag.name} primary style={{ margin: 3 }}>
                 <Text key={tag.name}>{tag.name}</Text>
               </Badge>
             );
@@ -85,30 +90,52 @@ class CVTest extends Component {
       }</>)
     };
 
+    const submitButton = () => {
+      return (
+        <>
+        <CardItem style={{paddingBottom: 0, paddingBottom: 0}}>
+          <Icon type="Feather" name="clock" style={{ fontSize: 24, color: "gray" }} />
+          <Picker
+              note
+              mode="dropdown"
+              style={{ width: 120, color: '#000000'}}
+              selectedValue={this.state.selected}
+              onValueChange={this._onPickerChange.bind(this)}
+            >
+              <Picker.Item label="24 Hours" value="24 Hours" />
+              <Picker.Item label="2 Days" value="2 Days" />
+              <Picker.Item label="3 Days" value="3 Days" />
+              <Picker.Item label="5 Days" value="5 Days" />
+              <Picker.Item label="A week" value="A week" />
+            </Picker>
+        </CardItem>
+        <CardItem footer>
+          <Button onPress={this._onSubmit}>
+            <Text>Submit</Text>
+          </Button>
+        </CardItem>
+        </>
+        );
+    }
     const displayCard = (
       <>
         <CardItem cardBody>
-        {
-          image &&
-          <Image source={{ uri: image }}  style={{height: 200, width: null, flex: 1}}/>
-        }
+          {
+            image &&
+            <Image source={{ uri: image }} style={{ height: 200, width: null, flex: 1 }} />
+          }
         </CardItem>
-        
+
         {
           image &&
           <CardItem cardBody>
-            <Body style={{ display: 'flex',flex: 1, flexDirection: 'row', width: '100%', flexWrap: 'wrap'}}>
-            {tags ? tags.length > 0 ? formatTags() : (<Spinner color='blue'/>) : (<></>)}
+            <Body style={{ display: 'flex', flex: 1, flexDirection: 'row', width: '100%', flexWrap: 'wrap' }}>
+              {tags ? tags.length > 0 ? formatTags() : (<Spinner color='blue' />) : (<></>)}
             </Body>
           </CardItem>
         }
         {
-          image &&
-          <CardItem footer>
-            <Button onPress={this._onSubmit}>
-              <Text>Submit</Text>
-            </Button>
-          </CardItem>
+          tags ? (tags.length > 0 && image) ? submitButton() : (<></>) : (<></>)
         }
       </>
     )
@@ -119,22 +146,22 @@ class CVTest extends Component {
       return (
         <Container>
           <Content>
-          <Card>
-            <CardItem>
-              <Left style={{ display: 'flex', flex: 1 }}>
-                <Icon type="FontAwesome" name="image" style={{ fontSize: 24, color: "gray" }} />
-                <Text style={{ fontWeight: 'bold' }}>Take a picture</Text>
-              </Left>
-              <Right>
-                <Button
-                  onPress={this._takePhoto} >
-                  <Text>Pick an image</Text>
-                </Button>
-              </Right>
-            </CardItem>
-            {displayCard}
-          </Card>
-        </Content>
+            <Card>
+              <CardItem>
+                <Left style={{ display: 'flex', flex: 1 }}>
+                  <Icon type="FontAwesome" name="image" style={{ fontSize: 24, color: "gray" }} />
+                  <Text style={{ fontWeight: 'bold' }}>Take a picture</Text>
+                </Left>
+                <Right>
+                  <Button
+                    onPress={this._takePhoto} >
+                    <Text>Pick an image</Text>
+                  </Button>
+                </Right>
+              </CardItem>
+              {displayCard}
+            </Card>
+          </Content>
         </Container>
       );
     }
