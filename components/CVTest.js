@@ -99,6 +99,7 @@ class CVTest extends Component {
         <>
         <CardItem style={{paddingBottom: 0, paddingBottom: 0}}>
           <Icon type="Feather" name="clock" style={{ fontSize: 24, color: "gray" }} />
+          <Text>Select the expiry date: </Text>
           <Picker
               note
               mode="dropdown"
@@ -111,7 +112,7 @@ class CVTest extends Component {
               <Picker.Item label="3 Days" value="3 Days" />
               <Picker.Item label="5 Days" value="5 Days" />
               <Picker.Item label="A week" value="A week" />
-            </Picker>
+          </Picker>
         </CardItem>
         <CardItem footer>
           <Button onPress={this._onSubmit}>
