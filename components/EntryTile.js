@@ -28,19 +28,19 @@ export default class EntryTile extends React.Component {
     } else {
 
       const formatTags = (
-        <>
+        <CardItem style={{overflowX: 'auto', width: '100%'}}>
         {
           post.tags.map((tag, index) => {
             if (parseFloat(tag.confidence) > 0.5) {
               return (
-                <Badge key={tag.name} primary style={{margin: 3, overflowX: 'auto'}}>
+                <Badge key={tag.name} primary style={{margin: 3}}>
                   <Text key={tag.name}>{tag.name}</Text>
                 </Badge>
               );
             }
           })
         }
-        </>
+        </CardItem>
       )
 
       return (
@@ -57,11 +57,9 @@ export default class EntryTile extends React.Component {
           <CardItem cardBody>
             <Image source={{ uri: post.image }} style={{ height: 200, width: null, flex: 1 }} />
           </CardItem>
-          <CardItem>
           {
             (post) ? formatTags : null
           }
-          </CardItem>
           {/* <CardItem>
             <Left>
               <Button transparent>
