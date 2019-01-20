@@ -1,14 +1,16 @@
 import React from 'react';
 import { Image } from 'react-native'
-import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body, Badge } from 'native-base'
+import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body, Badge, Switch, View } from 'native-base'
 import { AppLoading } from 'expo'
 
 export default class EntryTile extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = { 
-      loading: true 
+      loading: true,
+      isListed: (props.post) ? props.post.isListed : false
     }
+    this._toggleGiveAway = this._toggleGiveAway.bind(this);
   }
 
   async componentWillMount() {
@@ -17,6 +19,14 @@ export default class EntryTile extends React.Component {
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     })
     this.setState({ loading: false })
+  }
+
+  _toggleGiveAway = () => {
+    this.setState(prevState => ({
+      isListed: !prevState.isListed
+    }), () => {
+      // TODO: Update
+    })
   }
 
 
@@ -51,7 +61,10 @@ export default class EntryTile extends React.Component {
               <Text style={{ fontWeight: 'bold' }}>{post.owner}</Text>
             </Left>
             <Right>
-              <Text note><Icon type="FontAwesome" name="map-marker" style={{ fontSize: 16, color: "gray" }} /> Tampines</Text>
+              <Switch
+                value={this.state.isListed}
+                onValueChange={this._toggleGiveAway}
+              />
             </Right>
           </CardItem>
           <CardItem cardBody>

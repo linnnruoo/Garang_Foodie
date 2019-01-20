@@ -6,6 +6,7 @@ import { ImagePicker, Permissions } from 'expo';
 import { retrieveTags } from './../services/VisionService';
 import * as _ from 'lodash';
 import uuid from 'react-native-uuid';
+import Toast, { DURATION } from 'react-native-easy-toast'
 import fire from '../services/FireService'
 
 class CVTest extends Component {
@@ -25,7 +26,8 @@ class CVTest extends Component {
     Expo.Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
-    }).then(() => {   this.setState({ loading: false })})
+    })
+      this.setState({loading: false})
   }
 
   _urlToBlob = (url) => {
@@ -60,7 +62,9 @@ class CVTest extends Component {
       })
         .then(() => {
           console.log("success");
-          this.props.navigation.navigate('Main');
+          this.refs.toast.show('Submitted Successfully!', DURATION.LENGTH_SHORT);
+          this.props.navigation.goBack();
+          
         })
         .catch((err) => console.log(err));
     })
@@ -161,7 +165,12 @@ class CVTest extends Component {
               </CardItem>
               {displayCard}
             </Card>
+            
+            <Button onPress={() => this.props.navigation.goBack()} light={true}>
+              <Text>Back</Text>
+            </Button>
           </Content>
+          <Toast ref="toast" />
         </Container>
       );
     }
