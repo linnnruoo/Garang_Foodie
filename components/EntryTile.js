@@ -15,9 +15,8 @@ export default class EntryTile extends React.Component {
     await Expo.Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
-    }, () => {
-      this.setState({ loading: false })
     })
+    this.setState({ loading: false })
   }
 
 
@@ -48,7 +47,7 @@ export default class EntryTile extends React.Component {
         <Card>
           <CardItem>
             <Left>
-              <Thumbnail small source={{ uri: 'https://static1.squarespace.com/static/54f74f23e4b0952b4e0011c0/t/5ad5431e88251baeaac75f49/1523925845937/chris+hanna+bb.jpg' }} />
+              <Thumbnail small source={{ uri: 'https://cdn3.iconfinder.com/data/icons/vector-icons-6/96/256-512.png' }} />
               <Text style={{ fontWeight: 'bold' }}>{post.owner}</Text>
             </Left>
             <Right>
