@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import fire from '../services/FireService';
 import Toast, { DURATION } from 'react-native-easy-toast'
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
+import { Container, Header, Content, Item, Input, Icon } from 'native-base';
 
 class Login extends Component {
   constructor() {
@@ -40,22 +41,28 @@ class Login extends Component {
 
   render() {
     return(
-      <View style={styles.container}>
-        <Text>Login</Text>
-        <TextInput
-          value={this.state.email}
-          onChangeText={this._onChangeText('email')}
-          placeholder="Email"
-        />
-        <TextInput
-          secureTextEntry
-          value={this.state.password}
-          onChangeText={this._onChangeText('password')}
-          placeholder="Password"
-        />
-        <Button title="Login" onPress={this._loginUser} />
+      <Container>
+        <Content>
+          <Text>Login</Text>
+          <Item>
+            <Input
+              value={this.state.email}
+              onChangeText={this._onChangeText('email')}
+              placeholder="Email"
+            />
+          </Item>
+          <Item>
+            <Input
+              secureTextEntry
+              value={this.state.password}
+              onChangeText={this._onChangeText('password')}
+              placeholder="Password"
+            />
+          </Item>
+          <Button title="Login" onPress={this._loginUser} />
+        </Content>
         <Toast ref="toast" />
-      </View>
+      </Container>
     )
   }
 }

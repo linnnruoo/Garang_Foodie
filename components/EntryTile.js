@@ -1,6 +1,6 @@
 import React from 'react';
 import { Image } from 'react-native'
-import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body } from 'native-base'
+import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body, Badge } from 'native-base'
 import { AppLoading } from 'expo'
 
 export default class EntryTile extends React.Component {
@@ -19,27 +19,48 @@ export default class EntryTile extends React.Component {
     this.setState({ loading: false })
   }
 
- 
 
   render() {
+    const { post } = this.props;
+
     if (this.state.loading) {
       return <AppLoading />
     } else {
+
+      const formatTags = (
+        <CardItem style={{overflowX: 'auto', width: '100%'}}>
+        {
+          post.tags.map((tag, index) => {
+            if (parseFloat(tag.confidence) > 0.5) {
+              return (
+                <Badge key={tag.name} primary style={{margin: 3}}>
+                  <Text key={tag.name}>{tag.name}</Text>
+                </Badge>
+              );
+            }
+          })
+        }
+        </CardItem>
+      )
+
       return (
         <Card>
           <CardItem>
             <Left>
               <Thumbnail small source={{ uri: 'https://static1.squarespace.com/static/54f74f23e4b0952b4e0011c0/t/5ad5431e88251baeaac75f49/1523925845937/chris+hanna+bb.jpg' }} />
-              <Text style={{ fontWeight: 'bold' }}>John Doe</Text>
+              <Text style={{ fontWeight: 'bold' }}>{post.owner}</Text>
             </Left>
             <Right>
               <Text note><Icon type="FontAwesome" name="map-marker" style={{ fontSize: 16, color: "gray" }} /> Tampines</Text>
             </Right>
           </CardItem>
           <CardItem cardBody>
-            <Image source={{ uri: 'https://media.karousell.com/media/photos/products/2015/03/18/limited_edition_white_fudge_covered_oreo_1426653062_a61da08a.jpg' }} style={{ height: 200, width: null, flex: 1 }} />
+            <Image source={{ uri: post.image }} style={{ height: 200, width: null, flex: 1 }} />
           </CardItem>
-          <CardItem>
+          {
+            (post) ? formatTags : null
+          }
+          {/* <CardItem>
             <Left>
               <Button transparent>
                 <Icon active name="thumbs-up" />
@@ -51,10 +72,10 @@ export default class EntryTile extends React.Component {
               </Button>
             </Left>
 
-            {/* <Right>
+            <Right>
             <Text note>Offer ends in 12 hours</Text>
-            </Right> */}
-          </CardItem>
+            </Right>
+          </CardItem> */}
         </Card>
       );
     }

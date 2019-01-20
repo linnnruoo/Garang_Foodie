@@ -3,8 +3,8 @@ import MyList from './MyList'
 import CVTest from './CVTest'
 import { createStackNavigator, createAppContainer } from 'react-navigation'
 import fire from '../services/FireService';
-import {Icon, Button, Spinner} from 'native-base'
-import NoAuth from './Auth';
+import {Icon, Spinner} from 'native-base'
+import Auth from './Auth';
 
 export default class MyListContainer extends React.Component {
   constructor() {
@@ -38,7 +38,7 @@ export default class MyListContainer extends React.Component {
 
     if (this.state.user) return <ChildContainer />
 
-    return <NoAuth />
+    return <Auth />
   }
 }
 

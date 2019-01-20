@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { StyleSheet, Image, Alert } from 'react-native';
-import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body, Spinner, Container, Content, Badge } from 'native-base'
+import { StyleSheet, Image } from 'react-native';
+import { Card, CardItem, Text, Button, Icon, Left, Right, Body, Spinner, Container, Content, Badge } from 'native-base'
 import { AppLoading } from 'expo'
 import { ImagePicker, Permissions } from 'expo';
 import { retrieveTags } from './../services/VisionService';
@@ -26,12 +26,7 @@ class CVTest extends Component {
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     })
-    this.authSubscription = fire.auth().onAuthStateChanged((user) => {
-      this.setState({
-        loading: false,
-        user,
-      });
-    });
+    this.setState({loading: false})
   }
 
   _urlToBlob = (url) => { 
@@ -63,7 +58,10 @@ class CVTest extends Component {
         photoURL: user.photoURL
         
       })
-      .then(() => console.log("success"))
+      .then(() => {
+        console.log("success");
+        this.props.navigation.navigate('Main');
+      })
       .catch((err) => console.log(err));  
     })
     .catch((err) => console.log(err));
@@ -71,7 +69,7 @@ class CVTest extends Component {
 
   render() {
     let { image, tags } = this.state;
-    console.log("USER", this.state.user)
+
     const formatTags = () => {
       return (<>{
         _.map(tags, (tag) => {
