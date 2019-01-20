@@ -15,8 +15,9 @@ export default class EntryTile extends React.Component {
     await Expo.Font.loadAsync({
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
+    }, () => {
+      this.setState({ loading: false })
     })
-    this.setState({ loading: false })
   }
 
 
