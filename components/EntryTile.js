@@ -28,7 +28,7 @@ export default class EntryTile extends React.Component {
     } else {
 
       const formatTags = (
-        <CardItem style={{overflowX: 'auto', width: '100%'}}>
+        <CardItem style={{flex: 1, flexWrap: 'wrap'}}>
         {
           post.tags.map((tag, index) => {
             if (parseFloat(tag.confidence) > 0.5) {
