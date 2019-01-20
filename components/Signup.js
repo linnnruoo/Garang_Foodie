@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import fire from '../services/FireService';
 import Toast, { DURATION } from 'react-native-easy-toast'
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
+import { Card, CardItem, Icon, Left, Container} from 'native-base'
 
 class Signup extends Component {
   constructor() {
@@ -41,22 +42,39 @@ class Signup extends Component {
 
   render() {
     return(
-      <View style={styles.container}>
-        <Text>SIGN UP</Text>
-        <TextInput
+      <Container style={styles.container}>
+      <Card style={{width: '80%', height: 200}}>
+        <CardItem>
+          <Left>
+            <Icon type="SimpleLineIcons" name="user-follow" style={{ fontSize: 24, color: "gray", marginRight: 10 }} />
+            <Text style={{ fontWeight: 'bold'}}>Sign Up</Text>
+          </Left>
+        </CardItem>
+        <CardItem style={{ width: '100%', display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'flex-start'}}>
+          <View style={{ display: 'flex',flex: 1, flexDirection: 'row', alignItems: 'center', marginBottom: 0}}>
+          <Icon type="MaterialCommunityIcons" name="email" style={{ fontSize: 24, color: "gray" }} /><TextInput
           value={this.state.email}
           onChangeText={this._onChangeText('email')}
           placeholder="Enter your email here"
-        />
+          style={{flex: 1}}
+        /></View>
+        <View style={{ display: 'flex',flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+          <Icon type="MaterialCommunityIcons" name="textbox-password" style={{ fontSize: 24, color: "gray" }} /> 
         <TextInput
           secureTextEntry
           value={this.state.password}
           onChangeText={this._onChangeText('password')}
           placeholder="Enter your password here"
-        />
-        <Button title="Sign Up" onPress={this._signupUser} />
+          style={{display:'flex'}}
+        /></View>
+        </CardItem>
+        <CardItem footer>
+          <Button style={{ }}title="Sign Up" onPress={this._signupUser} />
         <Toast ref="toast" />
-      </View>
+
+        </CardItem>
+      </Card>
+      </Container>
     )
   }
 }
