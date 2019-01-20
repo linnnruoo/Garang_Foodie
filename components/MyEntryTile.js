@@ -2,6 +2,7 @@ import React from 'react';
 import { Image } from 'react-native'
 import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body, Badge, Switch, View } from 'native-base'
 import { AppLoading } from 'expo'
+import fire from '../services/FireService';
 
 export default class EntryTile extends React.Component {
   constructor(props) {
@@ -25,7 +26,20 @@ export default class EntryTile extends React.Component {
     this.setState(prevState => ({
       isListed: !prevState.isListed
     }), () => {
-      // TODO: Update
+      console.log("ID", this.props.post.post_id);
+      const {post_id} = this.props.post;
+
+      const dbRef = fire.database().ref('/posts');
+
+      dbRef
+        .orderByChild('post_id')
+        .equalTo(post_id)
+        .once('value')
+        .then((snapshot) => {
+          snapshot.forEach((child) => {
+            child.key('isListed').update(this.state.isListed);
+          });
+        })
     })
   }
 
