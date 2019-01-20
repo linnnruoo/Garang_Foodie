@@ -22,16 +22,25 @@ export default class Marketplace extends React.Component {
 
   componentDidMount= () => {
     let temp = [];
+    let childPromises = [];
 
+    const storeRef = fire.storage().ref().child('images/');
     const dbRef = fire.database().ref('/posts');
+
     dbRef.once('value').then((snapshot) => {
       snapshot.forEach((child) => {
+        childPromises.push(storeRef.child(child.val().image).getDownloadURL());
         temp.push(child.val());
-      })
+      });
 
-      this.setState({
-        posts: temp
-      })
+      Promise.all(childPromises).then((response) => {
+        for (let i = 0; i< response.length; i++){
+          temp[i].image = response[i];
+        }
+        this.setState(() => ({
+          posts: temp,
+        }));
+      });
     })
   }
 
@@ -40,7 +49,6 @@ export default class Marketplace extends React.Component {
   }
 
   render() {
-    console.log(this.posts)
     return (
       <Container>
         <Content>
