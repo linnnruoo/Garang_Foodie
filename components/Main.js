@@ -41,7 +41,8 @@ const AppTabNavigator = createBottomTabNavigator({
     style:{
       ...Platform.select({
         android:{
-          backgroundColor:'white'
+          backgroundColor:'white',
+          color: '#FFB238'
         }
       })
     }

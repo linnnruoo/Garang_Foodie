@@ -50,26 +50,31 @@ class Signup extends Component {
             <Text style={{ fontWeight: 'bold'}}>Sign Up</Text>
           </Left>
         </CardItem>
+
         <CardItem style={{ width: '100%', display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'flex-start'}}>
           <View style={{ display: 'flex',flex: 1, flexDirection: 'row', alignItems: 'center', marginBottom: 0}}>
-          <Icon type="MaterialCommunityIcons" name="email" style={{ fontSize: 24, color: "gray" }} /><TextInput
-          value={this.state.email}
-          onChangeText={this._onChangeText('email')}
-          placeholder="Enter your email here"
-          style={{flex: 1}}
-        /></View>
-        <View style={{ display: 'flex',flex: 1, flexDirection: 'row', alignItems: 'center'}}>
-          <Icon type="MaterialCommunityIcons" name="textbox-password" style={{ fontSize: 24, color: "gray" }} /> 
-        <TextInput
-          secureTextEntry
-          value={this.state.password}
-          onChangeText={this._onChangeText('password')}
-          placeholder="Enter your password here"
-          style={{display:'flex'}}
-        /></View>
+            <Icon type="MaterialCommunityIcons" name="email" style={{ fontSize: 24, color: "gray" }} /><TextInput
+              value={this.state.email}
+              onChangeText={this._onChangeText('email')}
+              placeholder="Enter your email here"
+              style={{flex: 1}}
+            />
+          </View>
+
+          <View style={{ display: 'flex',flex: 1, flexDirection: 'row', alignItems: 'center'}}>
+            <Icon type="MaterialCommunityIcons" name="textbox-password" style={{ fontSize: 24, color: "gray" }} />
+            <TextInput
+              secureTextEntry
+              value={this.state.password}
+              onChangeText={this._onChangeText('password')}
+              placeholder="Enter your password here"
+              style={{display:'flex'}}
+            />
+          </View>
+
         </CardItem>
         <CardItem footer>
-          <Button style={{ }}title="Sign Up" onPress={this._signupUser} />
+          <Button title="Sign Up" onPress={this._signupUser} />
         <Toast ref="toast" />
 
         </CardItem>

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import fire from '../services/FireService';
 import Toast, { DURATION } from 'react-native-easy-toast'
 import { StyleSheet, Text, View, Button, TextInput, Alert } from 'react-native';
-import { Container, Header, Content, Item, Input, Icon } from 'native-base';
+import { Card, CardItem, Icon, Left, Container} from 'native-base'
 
 class Login extends Component {
   constructor() {
@@ -30,7 +30,7 @@ class Login extends Component {
         this.refs.toast.show("Welcome back!", DURATION.LENGTH_SHORT);
         fire.auth().onAuthStateChanged((user) => {
           if (user) {
-            this.props.navigation.navigate('Main')
+            this.props.navigation.goBack();
           }
         })
       })
@@ -41,26 +41,41 @@ class Login extends Component {
 
   render() {
     return(
-      <Container>
-        <Content>
-          <Text>Login</Text>
-          <Item>
-            <Input
+      <Container style={styles.container}>
+        <Card style={{width: '80%', height: 200}}>
+
+        <CardItem>
+          <Left>
+            <Icon type="SimpleLineIcons" name="user" style={{ fontSize: 24, color: "gray", marginRight: 10 }} />
+            <Text style={{ fontWeight: 'bold'}}>Login</Text>
+          </Left>
+        </CardItem>
+
+        <CardItem style={{ width: '100%', display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'flex-start'}}>
+          <View style={{ display: 'flex',flex: 1, flexDirection: 'row', alignItems: 'center', marginBottom: 0}}>
+            <TextInput
               value={this.state.email}
               onChangeText={this._onChangeText('email')}
               placeholder="Email"
             />
-          </Item>
-          <Item>
-            <Input
+          </View>
+
+          <View style={{ display: 'flex',flex: 1, flexDirection: 'row', alignItems: 'center', marginBottom: 0}}>
+            <TextInput
               secureTextEntry
               value={this.state.password}
               onChangeText={this._onChangeText('password')}
               placeholder="Password"
             />
-          </Item>
-          <Button title="Login" onPress={this._loginUser} />
-        </Content>
+          </View>
+        </CardItem>
+
+        <CardItem footer>
+          <Button title="Login" onPress={this._loginUser} style={{color: '#FFB238'}} />
+        </CardItem>
+
+        </Card>
+
         <Toast ref="toast" />
       </Container>
     )

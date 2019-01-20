@@ -1,8 +1,9 @@
 import React from 'react';
-import { TouchableOpacity, StyleSheet } from 'react-native';
-import { Icon, Container, Content } from 'native-base'
+import { TouchableOpacity, StyleSheet, View } from 'react-native';
+import { Icon, Container, Content, Text } from 'native-base'
 import { AppLoading } from 'expo'
 import fire from '../services/FireService';
+import _ from 'lodash';
 import MyEntryTile from './MyEntryTile';
 
 export default class MyList extends React.Component {
@@ -74,6 +75,13 @@ export default class MyList extends React.Component {
               return (<MyEntryTile key={index} post={post} />)
             })
           }
+          {
+            (_.isEmpty(this.state.posts)) ? (
+              <View style={styles.container}>
+                <Text style={{fontSize: 20, color: '#ffb238'}}>You have not created any food item!</Text>
+              </View>
+            ) : null
+          }
           </Content>
           <TouchableOpacity onPress={() => navigation.navigate('CVTest') } style={styles.addButton}>
             <Icon name="add" style={styles.icon} />
@@ -92,7 +100,7 @@ const styles = StyleSheet.create({
     zIndex: 11,
     right: 20,
     bottom: 20,
-    backgroundColor: '#e91e62',
+    backgroundColor: '#FFB238',
     width: 80,
     height: 80,
     borderRadius: 50,
@@ -102,5 +110,11 @@ const styles = StyleSheet.create({
   },
   icon: {
     color: '#fff',
-  }
+  },
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
