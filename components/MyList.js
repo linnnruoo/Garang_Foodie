@@ -3,7 +3,7 @@ import { TouchableOpacity, StyleSheet } from 'react-native';
 import { Icon, Container, Content } from 'native-base'
 import { AppLoading } from 'expo'
 import fire from '../services/FireService';
-import EntryTile from './EntryTile';
+import MyEntryTile from './MyEntryTile';
 
 export default class MyList extends React.Component {
   constructor() {
@@ -71,7 +71,7 @@ export default class MyList extends React.Component {
           <Content>
           {
             (this.state.posts).map((post, index) => {
-              return (<EntryTile key={index} post={post} />)
+              return (<MyEntryTile key={index} post={post} />)
             })
           }
           </Content>
