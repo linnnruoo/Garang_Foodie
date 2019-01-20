@@ -36,9 +36,13 @@ export default class EntryTile extends React.Component {
         .equalTo(post_id)
         .once('value')
         .then((snapshot) => {
-          snapshot.forEach((child) => {
-            child.key('isListed').update(this.state.isListed);
-          });
+          let childKey; 
+          snapshot.forEach((child)=> {
+            
+            childKey=child.key;
+            console.log(childKey)
+          })
+          dbRef.child(childKey).update({isListed: this.state.isListed});
         })
     })
   }

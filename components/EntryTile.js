@@ -2,7 +2,6 @@ import React from 'react';
 import { Image } from 'react-native'
 import { Card, CardItem, Thumbnail, Text, Button, Icon, Left, Right, Body, Badge } from 'native-base'
 import { AppLoading } from 'expo'
-import Moment from 'react-moment'
 
 export default class EntryTile extends React.Component {
   constructor() {
