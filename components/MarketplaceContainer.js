@@ -12,6 +12,7 @@ export default class Marketplace extends React.Component {
       loading: true,
       posts: []
     }
+    this._fetchData = this._fetchData.bind(this);
   }
 
   static navigationOptions = {
@@ -21,6 +22,22 @@ export default class Marketplace extends React.Component {
   }
 
   componentDidMount= () => {
+    this._fetchData();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps !== this.props) {
+      this._fetchData();
+    }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps !== this.props) {
+      this._fetchData();
+    }
+  }
+
+  _fetchData = () => {
     let temp = [];
     let childPromises = [];
 
@@ -48,7 +65,7 @@ export default class Marketplace extends React.Component {
   }
 
   componentWillUnmount() {
-    this.authSubscription();
+    this._fetchData();
   }
 
   render() {
