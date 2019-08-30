@@ -9,7 +9,7 @@
   "dependencies": {
     "@babel/core": "^7.2.2",
     "@expo/vector-icons": "^9.0.0",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "expo": "^32.0.0",
     "firebase": "^5.8.0",
     "lodash": "^4.17.11",
